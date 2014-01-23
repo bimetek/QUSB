@@ -38,13 +38,36 @@ HEADERS += \
     io_p.h \
     eventhandler.h
 
-unix {
-    target.path = /usr/lib
-    INSTALLS += target
-}
+PUBLIC_HEADERS = \
+    global.h \
+    device.h \
+    handle.h \
+    io.h \
+    bulkio.h \
+    eventhandler.h
 
 QMAKE_MOC = $$QMAKE_MOC -nw     # Make MOC shut up about non-QObject classes
 
 # TODO: Make this distributable
 INCLUDEPATH += /usr/local/include
 LIBS += -L/usr/local/lib -lusb-1.0
+
+
+#
+# Deploy
+#
+isEmpty(QUSB_INSTALL_PREFIX) {  # If the user had set this, honor that
+    QUSB_INSTALL_PREFIX = $$[QT_INSTALL_PREFIX]
+    unix {
+        QUSB_INSTALL_PREFIX = /usr/local/QUSB
+    }
+    win32 {
+        QWT_INSTALL_PREFIX = C:/QUSB
+    }
+}
+
+headers.files = $${HEADERS}
+headers.path = $${QUSB_INSTALL_PREFIX}/include/QUSB
+target.path = $${QUSB_INSTALL_PREFIX}/lib
+
+INSTALLS += headers target
