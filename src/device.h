@@ -2,8 +2,9 @@
 #define QUSB_DEVICE_H
 
 #include "global.h"
-#include "clibusb"
 #include <QtCore/QList>
+struct libusb_context;
+struct libusb_device;
 
 namespace QUSB
 {
@@ -22,13 +23,15 @@ class SHARED_EXPORT Device
 
 public:
 
+    // This actually matches LibUSB's constants, but we don't want to
+    // completely depend on that.
     enum Speed
     {
-        SpeedUnknown = LIBUSB_SPEED_UNKNOWN,
-        SpeedLow = LIBUSB_SPEED_LOW,
-        SpeedFull = LIBUSB_SPEED_FULL,
-        SpeedHigh = LIBUSB_SPEED_HIGH,
-        SpeedSuper = LIBUSB_SPEED_SUPER
+        SpeedUnknown = 0,
+        SpeedLow,
+        SpeedFull,
+        SpeedHigh,
+        SpeedSuper
     };
 
     friend class Handle;

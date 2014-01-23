@@ -2,6 +2,7 @@
 #define QUSB_HANDLE_H
 
 #include "device.h"
+struct libusb_device_handle;
 
 namespace QUSB
 {

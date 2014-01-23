@@ -1,4 +1,5 @@
 #include "io_p.h"
+#include "clibusb"
 
 namespace QUSB
 {

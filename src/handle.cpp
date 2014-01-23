@@ -1,4 +1,5 @@
 #include "handle.h"
+#include "clibusb"
 
 namespace QUSB
 {

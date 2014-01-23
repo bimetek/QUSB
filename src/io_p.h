@@ -2,6 +2,7 @@
 #define QUSB_IO_P_H
 
 #include "io.h"
+struct libusb_transfer;
 class QThread;
 
 namespace QUSB

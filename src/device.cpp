@@ -2,6 +2,7 @@
 #include <QtCore/QCoreApplication>
 #include <QtCore/QMutex>
 #include <QtCore/QThread>
+#include "clibusb"
 #include "eventhandler.h"
 
 namespace QUSB
