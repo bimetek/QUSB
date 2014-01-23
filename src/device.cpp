@@ -49,7 +49,7 @@ libusb_context *Device::rawcontext()
         if (!context)
         {
             int r = libusb_init(&context);
-#ifndef QT_NO_DEBUG
+#ifdef QT_DEBUG
             libusb_set_debug(context, 3);
 #endif
             if (r)
