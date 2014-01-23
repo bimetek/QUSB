@@ -3,4 +3,5 @@ Makefile
 .qmake*
 build/
 lib/
+bin/
 *.o
