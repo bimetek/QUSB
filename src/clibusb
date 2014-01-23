@@ -1,0 +1,8 @@
+#ifndef QUSB_CLIBUSB_H
+#define QUSB_CLIBUSB_H
+
+extern "C" {
+#include <libusb-1.0/libusb.h>
+}
+
+#endif // QUSB_CLIBUSB_H
