@@ -9,7 +9,7 @@ namespace QUSB
 
 class IOPrivate;
 
-class IO : public QObject
+class SHARED_EXPORT IO : public QObject
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(IO)

@@ -43,8 +43,7 @@ PUBLIC_HEADERS = \
     device.h \
     handle.h \
     io.h \
-    bulkio.h \
-    eventhandler.h
+    bulkio.h
 
 QMAKE_MOC = $$QMAKE_MOC -nw     # Make MOC shut up about non-QObject classes
 

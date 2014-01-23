@@ -8,7 +8,7 @@ namespace QUSB
 
 class BulkIOPrivate;
 
-class BulkIO : public IO
+class SHARED_EXPORT BulkIO : public IO
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(BulkIO)
