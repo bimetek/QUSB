@@ -17,7 +17,7 @@ class SHARED_EXPORT Device
     DevicePrivate *d_ptr;
 
     explicit Device(libusb_device *rawdevice);
-    Device &operator=(const Device &d);     // Disabled
+    Device &operator=(const Device &);      // Disabled
 
     libusb_device *rawdevice() const;
     static libusb_context *rawcontext();

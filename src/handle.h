@@ -15,8 +15,8 @@ class SHARED_EXPORT Handle
     HandlePrivate *d_ptr;
 
     Handle(libusb_device_handle *rawhandle);
-    Handle(const Handle &);     // Disabled
-    Handle &operator=(const Handle &h);     // Disabled
+    Handle(const Handle &);                 // Disabled
+    Handle &operator=(const Handle &);      // Disabled
 
 public:
     explicit Handle(const Device &device);

@@ -40,9 +40,9 @@ Handle::Handle(const Handle &)
 {
 }
 
-Handle &Handle::operator=(const Handle &h)
+Handle &Handle::operator=(const Handle &)
 {
-    return h;
+    return *this;
 }
 
 Handle::~Handle()

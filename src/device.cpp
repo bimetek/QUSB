@@ -117,9 +117,9 @@ Device::Speed Device::speed() const
     return sp;
 }
 
-Device &Device::operator=(const Device &d)
+Device &Device::operator=(const Device &)
 {
-    return d;
+    return *this;
 }
 
 QList<Device *> Device::availableDevices()
