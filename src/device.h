@@ -16,7 +16,8 @@ class SHARED_EXPORT Device
     Q_DECLARE_PRIVATE(Device)
     DevicePrivate *d_ptr;
 
-    Device(libusb_device *rawdevice);
+    explicit Device(libusb_device *rawdevice);
+    Device &operator=(const Device &d);     // Disabled
 
     libusb_device *rawdevice() const;
     static libusb_context *rawcontext();
@@ -36,6 +37,7 @@ public:
 
     friend class Handle;
 
+    Device(const Device &d);
     ~Device();
 
     quint8 bus() const;

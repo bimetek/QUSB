@@ -71,6 +71,12 @@ libusb_context *Device::rawcontext()
     return context;
 }
 
+Device::Device(const Device &d) :
+    d_ptr(new DevicePrivate(this, d.rawdevice()))
+{
+    libusb_ref_device(d.rawdevice());
+}
+
 Device::~Device()
 {
     libusb_unref_device(d_ptr->rawdevice);
@@ -109,6 +115,11 @@ Device::Speed Device::speed() const
         break;
     }
     return sp;
+}
+
+Device &Device::operator=(const Device &d)
+{
+    return d;
 }
 
 QList<Device *> Device::availableDevices()

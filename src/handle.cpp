@@ -36,6 +36,15 @@ Handle::Handle(const Device &device) :
         qWarning("Unable to obtain device handle.");
 }
 
+Handle::Handle(const Handle &)
+{
+}
+
+Handle &Handle::operator=(const Handle &h)
+{
+    return h;
+}
+
 Handle::~Handle()
 {
     foreach (int num, d_ptr->claimedInterfaces)
