@@ -17,7 +17,6 @@ class SHARED_EXPORT Device
     DevicePrivate *d_ptr;
 
     explicit Device(libusb_device *rawdevice);
-    Device &operator=(const Device &);      // Disabled
 
     libusb_device *rawdevice() const;
     static libusb_context *rawcontext();
@@ -44,7 +43,9 @@ public:
     quint8 address() const;
     Speed speed() const;
 
-    static QList<Device *> availableDevices();
+    Device &operator=(const Device &d);
+
+    static QList<Device> availableDevices();
 };
 
 }   // namespace QUSB

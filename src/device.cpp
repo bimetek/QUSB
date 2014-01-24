@@ -119,20 +119,21 @@ Device::Speed Device::speed() const
     return sp;
 }
 
-Device &Device::operator=(const Device &)
+Device &Device::operator=(const Device &d)
 {
+    this->d_ptr->rawdevice = d.d_ptr->rawdevice;
     return *this;
 }
 
-QList<Device *> Device::availableDevices()
+QList<Device> Device::availableDevices()
 {
     libusb_context *context = Device::rawcontext();
     libusb_device **deviceArray = 0;
 
     ssize_t deviceCount = libusb_get_device_list(context, &deviceArray);
-    QList<Device *> devices;
+    QList<Device> devices;
     for (ssize_t i = 0; i < deviceCount; i++)
-        devices.append(new Device(deviceArray[i]));
+        devices.append(Device(deviceArray[i]));
     libusb_free_device_list(
         deviceArray,
         1   // Deref the device instances because DevicePrivate holds it.

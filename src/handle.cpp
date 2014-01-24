@@ -10,15 +10,17 @@ class HandlePrivate
     Handle *q_ptr;
 
 public:
-    HandlePrivate(Handle *q) :
-        q_ptr(q), rawhandle(0) {}
+    HandlePrivate(Handle *q, const Device &device) :
+        q_ptr(q), rawhandle(0), device(device) {}
 
     libusb_device_handle *rawhandle;
+    Device device;
     QList<int> claimedInterfaces;
 };
 
-Handle::Handle(libusb_device_handle *rawhandle) :
-    d_ptr(new HandlePrivate(this))
+Handle::Handle(const Device &device, libusb_device_handle *rawhandle,
+        QObject *parent) :
+    QObject(parent), d_ptr(new HandlePrivate(this, device))
 {
     d_ptr->rawhandle = rawhandle;
 }
@@ -28,21 +30,13 @@ libusb_device_handle *Handle::rawhandle() const
     return d_ptr->rawhandle;
 }
 
-Handle::Handle(const Device &device) :
-    d_ptr(new HandlePrivate(this))
+Handle::Handle(const Device &device, QObject *parent) :
+    QObject(parent), d_ptr(new HandlePrivate(this, device))
 {
     int r = libusb_open(device.rawdevice(), &d_ptr->rawhandle);
     if (r)
         qWarning("Unable to obtain device handle.");
-}
 
-Handle::Handle(const Handle &)
-{
-}
-
-Handle &Handle::operator=(const Handle &)
-{
-    return *this;
 }
 
 Handle::~Handle()
@@ -78,7 +72,9 @@ Handle *Handle::fromVendorIdProductId(quint16 vid, quint16 pid)
     libusb_device_handle *rawhandle = libusb_open_device_with_vid_pid(
         Device::rawcontext(), vid, pid
     );
-    return new Handle(rawhandle);
+    libusb_device *rawdevice = libusb_get_device(rawhandle);
+    Device device(rawdevice);
+    return new Handle(device, rawhandle);
 }
 
 }   // namespace QUSB

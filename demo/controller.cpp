@@ -7,10 +7,11 @@
 Controller::Controller(QObject *parent) :
     QObject(parent)
 {
-    QList<QUSB::Device *> devices = QUSB::Device::availableDevices();
-    foreach (QUSB::Device *device, devices)
-        qDebug() << device->address();
+    QList<QUSB::Device> devices = QUSB::Device::availableDevices();
+    foreach (const QUSB::Device &device, devices)
+        qDebug() << device.address();
     handle = QUSB::Handle::fromVendorIdProductId(0xeb1a, 0x299f);
+    handle->setParent(this);
     handle->claimInterface(0);
     io = new QUSB::BulkIO(handle, 3, this);
     io->open(QIODevice::ReadOnly);
@@ -23,7 +24,6 @@ Controller::Controller(QObject *parent) :
 Controller::~Controller()
 {
     io->close();
-    delete handle;
 }
 
 void Controller::processBytes(const QByteArray &bytes)
