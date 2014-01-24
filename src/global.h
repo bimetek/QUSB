@@ -1,12 +1,12 @@
-#ifndef GLOBAL_H
-#define GLOBAL_H
+#ifndef QUSB_GLOBAL_H
+#define QUSB_GLOBAL_H
 
 #include <QtCore/QtGlobal>
 
-#if defined(SRC_LIBRARY)
-#  define SHARED_EXPORT Q_DECL_EXPORT
+#if defined(QUSB_LIBRARY)
+#  define QUSB_SHARED_EXPORT Q_DECL_EXPORT
 #else
-#  define SHARED_EXPORT Q_DECL_IMPORT
+#  define QUSB_SHARED_EXPORT Q_DECL_IMPORT
 #endif
 
-#endif // GLOBAL_H
+#endif // QUSB_GLOBAL_H

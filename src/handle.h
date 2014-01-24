@@ -10,7 +10,7 @@ namespace QUSB
 
 class HandlePrivate;
 
-class SHARED_EXPORT Handle : public QObject
+class QUSB_SHARED_EXPORT Handle : public QObject
 {
     Q_DECLARE_PRIVATE(Handle)
     HandlePrivate *d_ptr;

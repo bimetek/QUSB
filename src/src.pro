@@ -18,7 +18,7 @@ PRECOMPILED_DIR = $$BUILD_DIR
 #
 # Project settings
 #
-DEFINES += SRC_LIBRARY
+DEFINES += QUSB_LIBRARY
 
 SOURCES += \
     device.cpp \

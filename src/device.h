@@ -11,7 +11,7 @@ namespace QUSB
 
 class DevicePrivate;
 
-class SHARED_EXPORT Device
+class QUSB_SHARED_EXPORT Device
 {
     Q_DECLARE_PRIVATE(Device)
     DevicePrivate *d_ptr;
