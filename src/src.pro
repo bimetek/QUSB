@@ -58,15 +58,15 @@ LIBS += -L/usr/local/lib -lusb-1.0
 isEmpty(QUSB_INSTALL_PREFIX) {  # If the user had set this, honor that
     QUSB_INSTALL_PREFIX = $$[QT_INSTALL_PREFIX]
     unix {
-        QUSB_INSTALL_PREFIX = /usr/local/QUSB
+        QUSB_INSTALL_PREFIX = /usr/local/qusb
     }
     win32 {
-        QWT_INSTALL_PREFIX = C:/QUSB
+        QWT_INSTALL_PREFIX = C:/qusb
     }
 }
 
 headers.files = $${HEADERS}
-headers.path = $${QUSB_INSTALL_PREFIX}/include/QUSB
+headers.path = $${QUSB_INSTALL_PREFIX}/include/qusb
 target.path = $${QUSB_INSTALL_PREFIX}/lib
 
 INSTALLS += headers target
