@@ -10,6 +10,7 @@ namespace QUSB
 {
 
 class DevicePrivate;
+void setDebugLevel(int level);
 
 class QUSB_SHARED_EXPORT Device
 {
@@ -35,6 +36,7 @@ public:
     };
 
     friend class Handle;
+    friend void setDebugLevel(int level);
 
     Device(const Device &d);
     ~Device();

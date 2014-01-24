@@ -49,9 +49,6 @@ libusb_context *Device::rawcontext()
         if (!context)
         {
             int r = libusb_init(&context);
-#ifdef QT_DEBUG
-            libusb_set_debug(context, 3);
-#endif
             if (r)
                 qWarning("Failed to initiaize LibUSB");
             if (context)
@@ -140,6 +137,11 @@ QList<Device> Device::availableDevices()
     );
 
     return devices;
+}
+
+void setDebugLevel(int level)
+{
+    libusb_set_debug(Device::rawcontext(), level);
 }
 
 }   // namespace QUSB
