@@ -18,6 +18,8 @@ IOPrivate::~IOPrivate()
 
 void IOPrivate::transferCallback(libusb_transfer *transfer)
 {
+    if (!transfer || !transfer->user_data)
+        return;
     IOPrivate *obj = reinterpret_cast<IOPrivate *>(transfer->user_data);
     if (transfer == obj->readTransfer)
     {
