@@ -116,6 +116,24 @@ Device::Speed Device::speed() const
     return sp;
 }
 
+qint32 Device::vendorId() const
+{
+    libusb_device_descriptor desc;
+    int r = libusb_get_device_descriptor(d_ptr->rawdevice, &desc);
+    if (r)
+        return -1;
+    return desc.idVendor;
+}
+
+qint32 Device::productId() const
+{
+    libusb_device_descriptor desc;
+    int r = libusb_get_device_descriptor(d_ptr->rawdevice, &desc);
+    if (r)
+        return -1;
+    return desc.idProduct;
+}
+
 Device &Device::operator=(const Device &d)
 {
     this->d_ptr->rawdevice = d.d_ptr->rawdevice;
