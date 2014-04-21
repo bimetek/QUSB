@@ -5,7 +5,7 @@
 
 
 Controller::Controller(QObject *parent) :
-    QObject(parent)
+    QObject(parent), count(0)
 {
     QList<QUSB::Device> devices = QUSB::Device::availableDevices();
     foreach (const QUSB::Device &device, devices)
@@ -31,4 +31,7 @@ void Controller::processBytes(const QByteArray &bytes)
     QDebug dbg = qDebug();
     for (int i = 0; i < bytes.length(); i++)
         dbg << static_cast<int>(bytes[i]);
+    count++;
+    if (count >= 4)
+        this->deleteLater();
 }

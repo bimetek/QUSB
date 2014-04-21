@@ -19,6 +19,7 @@ public slots:
 private:
     QUSB::Handle *handle;
     QUSB::BulkIO *io;
+    int count;
 };
 
 #endif // CONTROLLER_H
