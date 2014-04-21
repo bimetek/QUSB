@@ -72,6 +72,8 @@ Handle *Handle::fromVendorIdProductId(quint16 vid, quint16 pid)
     libusb_device_handle *rawhandle = libusb_open_device_with_vid_pid(
         Device::rawcontext(), vid, pid
     );
+    if (!rawhandle)
+        return 0;
     libusb_device *rawdevice = libusb_get_device(rawhandle);
     Device device(rawdevice);
     return new Handle(device, rawhandle);
