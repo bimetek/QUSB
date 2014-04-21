@@ -42,8 +42,19 @@ bool IO::open(QIODevice::OpenMode openMode)
 
 void IO::close()
 {
+    if (!d_ptr->readTransfer)
+        return;
+
+    if (!d_ptr->readTransfer->dev_handle)
+    {
+        // Nothing to transfer. We can clean up now safely.
+        libusb_free_transfer(d_ptr->readTransfer);
+        return;
+    }
+
+    // Needs to cancel the transfer first. Cleanup happens in the
+    // callback. (IOPrivate::transferCallback)
     libusb_cancel_transfer(d_ptr->readTransfer);
-    // Transfer cleanup happens in the callback.
 }
 
 }   // namespace QUSB
