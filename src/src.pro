@@ -48,8 +48,12 @@ PUBLIC_HEADERS = \
 QMAKE_MOC = $$QMAKE_MOC -nw     # Make MOC shut up about non-QObject classes
 
 # TODO: Make this distributable
-INCLUDEPATH += $(QUSB_LIBUSB_PREFIX)/include
-LIBS += -L$(QUSB_LIBUSB_PREFIX)/lib -lusb-1.0
+QUSB_LIBUSB_PREFIX = $(QUSB_LIBUSB_PREFIX)
+!isEmpty(QUSB_LIBUSB_PREFIX) {
+    INCLUDEPATH += $(QUSB_LIBUSB_PREFIX)/include
+    LIBS += -L$(QUSB_LIBUSB_PREFIX)/lib
+}
+LIBS += -lusb-1.0
 
 
 #
