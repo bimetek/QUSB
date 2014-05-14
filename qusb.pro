@@ -1,6 +1,8 @@
 TEMPLATE = subdirs
-CONFIG += ordered
 
-SUBDIRS = \
-    src \
-    demo
+SUBDIRS = src
+
+CONFIG(demo) {
+    SUBDIRS += demo
+    demo.depends = src
+}
