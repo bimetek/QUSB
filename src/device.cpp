@@ -163,7 +163,12 @@ qint32 Device::serialNumber() const
     return desc.iSerialNumber;
 }
 
-
+/**
+ * @brief Device::getStringDescriptor
+ * @param dev
+ * @param index
+ * @return A QString representation of the requested index
+ */
 QString Device::getStringDescriptor(Handle *dev,quint32 index)
 {
     int r;

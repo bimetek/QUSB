@@ -48,9 +48,9 @@ public:
     Speed speed() const;
     qint32 vendorId() const;    // A qint16, or -1
     qint32 productId() const;   // A qint16, or -1
-    qint32 product() const;
-    qint32 manufacturer() const;
-    qint32 serialNumber() const;
+    qint32 product() const; //A qint16, or -1
+    qint32 manufacturer() const; //A qint16, or -1
+    qint32 serialNumber() const; //A qint16, or -1
 
     static QString getStringDescriptor(QUSB::Handle *dev, quint32 index);
     Device &operator=(const Device &d);
