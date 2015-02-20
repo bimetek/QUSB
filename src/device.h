@@ -2,13 +2,15 @@
 #define QUSB_DEVICE_H
 
 #include "global.h"
+#include "clibusb"
+
 #include <QtCore/QList>
 struct libusb_context;
 struct libusb_device;
 
 namespace QUSB
 {
-
+class Handle;
 class DevicePrivate;
 void setDebugLevel(int level);
 
@@ -46,7 +48,11 @@ public:
     Speed speed() const;
     qint32 vendorId() const;    // A qint16, or -1
     qint32 productId() const;   // A qint16, or -1
+    qint32 product() const;
+    qint32 manufacturer() const;
+    qint32 serialNumber() const;
 
+    static QString getStringDescriptor(QUSB::Handle *dev, quint32 index);
     Device &operator=(const Device &d);
 
     static QList<Device> availableDevices();
