@@ -1,5 +1,6 @@
-#include "handle.h"
 #include "clibusb"
+#include "device.h"
+#include "handle.h"
 
 namespace QUSB
 {
@@ -88,6 +89,18 @@ Handle *Handle::fromVendorIdProductId(quint16 vid, quint16 pid)
     libusb_device *rawdevice = libusb_get_device(rawhandle);
     Device device(rawdevice);
     return new Handle(device, rawhandle);
+}
+
+QString Handle::stringDescriptor(quint32 index) const
+{
+    const int bufferSize = 256;
+    char buffer[bufferSize];
+    int r = libusb_get_string_descriptor_ascii(
+                rawhandle(), index, reinterpret_cast<uchar *>(buffer),
+                bufferSize);
+    if (r < 0)  // TODO: Need to do something with the error code.
+        qWarning("Error getting description");
+    return QString::fromAscii(buffer, bufferSize);
 }
 
 }   // namespace QUSB

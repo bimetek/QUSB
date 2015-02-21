@@ -8,8 +8,6 @@ class QThread;
 namespace QUSB
 {
 
-#include <QObject>
-
 class EventHandler : public QObject
 {
     Q_OBJECT

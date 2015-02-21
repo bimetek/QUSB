@@ -1,12 +1,13 @@
 #ifndef QUSB_IO_H
 #define QUSB_IO_H
 
-#include <QIODevice>
-#include "handle.h"
+#include <QtCore/QIODevice>
+#include "global.h"
 
 namespace QUSB
 {
 
+class Handle;
 class IOPrivate;
 
 class QUSB_SHARED_EXPORT IO : public QObject

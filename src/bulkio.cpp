@@ -1,5 +1,6 @@
-#include "bulkio.h"
 #include "clibusb"
+#include "bulkio.h"
+#include "handle.h"
 #include "io_p.h"
 
 namespace QUSB

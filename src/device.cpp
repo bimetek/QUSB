@@ -1,10 +1,10 @@
-#include "device.h"
-#include "handle.h"
-#include <QDebug>
 #include <QtCore/QCoreApplication>
 #include <QtCore/QMutex>
 #include <QtCore/QThread>
+#include "clibusb"
+#include "device.h"
 #include "eventhandler.h"
+#include "handle.h"
 
 
 namespace QUSB
@@ -141,20 +141,20 @@ qint32 Device::productId() const
 
 qint32 Device::product() const
 {
-        libusb_device_descriptor desc;
-        int r = libusb_get_device_descriptor(d_ptr->rawdevice, &desc);
-        if (r)
-            return -1;
-        return desc.iProduct;
+    libusb_device_descriptor desc;
+    int r = libusb_get_device_descriptor(d_ptr->rawdevice, &desc);
+    if (r)
+        return -1;
+    return desc.iProduct;
 }
 
 qint32 Device::manufacturer() const
 {
-        libusb_device_descriptor desc;
-        int r = libusb_get_device_descriptor(d_ptr->rawdevice, &desc);
-        if (r)
-            return -1;
-        return desc.iManufacturer;
+    libusb_device_descriptor desc;
+    int r = libusb_get_device_descriptor(d_ptr->rawdevice, &desc);
+    if (r)
+        return -1;
+    return desc.iManufacturer;
 }
 
 qint32 Device::serialNumber() const
@@ -164,27 +164,6 @@ qint32 Device::serialNumber() const
     if (r)
         return -1;
     return desc.iSerialNumber;
-}
-
-/**
- * @brief Device::getStringDescriptor
- * @param dev
- * @param index
- * @return A QString representation of the requested index
- */
-QString Device::getStringDescriptor(Handle *dev,quint32 index)
-{
-    int r;
-    char buffer[256];
-    r = libusb_get_string_descriptor_ascii(dev->rawhandle(), index,
-                                           (unsigned char*)buffer, sizeof(buffer));
-    if(r < 0)
-    {
-        //Need to do something with the error code
-        qDebug() << "Error getting description";
-    }
-    QString ret(buffer);
-    return ret;
 }
 
 Device &Device::operator=(const Device &d)

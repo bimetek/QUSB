@@ -1,6 +1,6 @@
-#include "eventhandler.h"
 #include <QtCore/QThread>
 #include "clibusb"
+#include "eventhandler.h"
 
 namespace QUSB
 {

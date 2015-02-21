@@ -1,7 +1,7 @@
 #ifndef QUSB_IO_P_H
 #define QUSB_IO_P_H
 
-#include "io.h"
+#include <QtCore/QtGlobal>
 struct libusb_transfer;
 class QThread;
 
@@ -9,6 +9,7 @@ namespace QUSB
 {
 
 class Channel;
+class IO;
 
 class IOPrivate
 {

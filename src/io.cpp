@@ -1,7 +1,7 @@
+#include <QtCore/QThread>
+#include "clibusb"
 #include "io.h"
 #include "io_p.h"
-#include "clibusb"
-#include <QtCore/QThread>
 
 namespace QUSB
 {

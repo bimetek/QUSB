@@ -2,12 +2,13 @@
 #define QUSB_HANDLE_H
 
 #include <QtCore/QObject>
-#include "device.h"
+#include "global.h"
 struct libusb_device_handle;
 
 namespace QUSB
 {
 
+class Device;
 class HandlePrivate;
 
 class QUSB_SHARED_EXPORT Handle : public QObject
@@ -31,6 +32,8 @@ public:
     libusb_device_handle *rawhandle() const;
 
     static Handle *fromVendorIdProductId(quint16 vid, quint16 pid);
+
+    QString stringDescriptor(quint32 index) const;
 };
 
 }   // namespace QUSB

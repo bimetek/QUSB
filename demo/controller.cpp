@@ -10,12 +10,15 @@ Controller::Controller(QObject *parent) :
     QList<QUSB::Device> devices = QUSB::Device::availableDevices();
     foreach (const QUSB::Device &device, devices)
     {
-        qDebug() << "Got device at:" << device.bus()<<":"<< device.address();
-        qDebug() << "It's: "<<device.productId();
-        handle = QUSB::Handle::fromVendorIdProductId(device.vendorId(),
-                                                     device.productId());
-        qDebug()<<QUSB::Device::getStringDescriptor(handle, device.product());
-        qDebug()<<QUSB::Device::getStringDescriptor(handle, device.manufacturer());
+        qDebug() << "Got device at:" << device.bus() << ":" << device.address();
+        qDebug() << "Device info:"<< "Product ID" << device.productId();
+
+        handle = QUSB::Handle::fromVendorIdProductId(
+                    device.vendorId(), device.productId());
+        qDebug() << "            " << "Product description" <<
+                    handle->stringDescriptor(device.product());
+        qDebug() << "            " << "Manufacturer" <<
+                    handle->stringDescriptor(device.manufacturer());
     }
     handle = QUSB::Handle::fromVendorIdProductId(0xeb1a, 0x299f);
     handle->setParent(this);
