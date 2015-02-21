@@ -10,33 +10,38 @@
 namespace QUSB
 {
 
-// ============================================================== DevicePrivate
-
 class DevicePrivate
 {
     Q_DECLARE_PUBLIC(Device)
     Device *q_ptr;
 
 public:
-    DevicePrivate(Device *q, libusb_device *rawdevice) :
-        q_ptr(q), rawdevice(rawdevice) {}
+    DevicePrivate(Device *q, libusb_device *rawdevice);
+    virtual ~DevicePrivate();
 
     libusb_device *rawdevice;
 };
 
+DevicePrivate::DevicePrivate(Device *q, libusb_device *rawdevice) :
+    q_ptr(q), rawdevice(rawdevice)
+{
+    libusb_ref_device(rawdevice);
+}
 
+DevicePrivate::~DevicePrivate()
+{
+    libusb_unref_device(rawdevice);
+}
 
-// ===================================================================== Device
 
 Device::Device(libusb_device *rd) :
     d_ptr(new DevicePrivate(this, rd))
 {
-    libusb_ref_device(rd);
 }
 
 libusb_device *Device::rawdevice() const
 {
-    return d_ptr->rawdevice;
+    return d_func()->rawdevice;
 }
 
 libusb_context *Device::rawcontext()
@@ -75,12 +80,10 @@ libusb_context *Device::rawcontext()
 Device::Device(const Device &d) :
     d_ptr(new DevicePrivate(this, d.rawdevice()))
 {
-    libusb_ref_device(d.rawdevice());
 }
 
 Device::~Device()
 {
-    libusb_unref_device(d_ptr->rawdevice);
     delete d_ptr;
 }
 

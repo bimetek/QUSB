@@ -10,30 +10,43 @@ class HandlePrivate
     Handle *q_ptr;
 
 public:
-    HandlePrivate(Handle *q, const Device &device) :
-        q_ptr(q), rawhandle(0), device(device) {}
+    HandlePrivate(
+            Handle *q, const Device &device, libusb_device_handle *rawhandle);
+    virtual ~HandlePrivate();
 
     libusb_device_handle *rawhandle;
     Device device;
     QList<int> claimedInterfaces;
 };
 
+HandlePrivate::HandlePrivate(
+        Handle *q, const Device &device, libusb_device_handle *rawhandle) :
+    q_ptr(q), rawhandle(rawhandle), device(device) {}
+
+HandlePrivate::~HandlePrivate()
+{
+    foreach (int num, claimedInterfaces)
+        libusb_release_interface(rawhandle, num);
+    libusb_close(rawhandle);
+}
+
+
 Handle::Handle(const Device &device, libusb_device_handle *rawhandle,
         QObject *parent) :
-    QObject(parent), d_ptr(new HandlePrivate(this, device))
+    QObject(parent), d_ptr(new HandlePrivate(this, device, rawhandle))
 {
-    d_ptr->rawhandle = rawhandle;
 }
 
 libusb_device_handle *Handle::rawhandle() const
 {
-    return d_ptr->rawhandle;
+    return d_func()->rawhandle;
 }
 
 Handle::Handle(const Device &device, QObject *parent) :
-    QObject(parent), d_ptr(new HandlePrivate(this, device))
+    QObject(parent), d_ptr(new HandlePrivate(this, device, 0))
 {
-    int r = libusb_open(device.rawdevice(), &d_ptr->rawhandle);
+    Q_D(Handle);
+    int r = libusb_open(device.rawdevice(), &d->rawhandle);
     if (r)
         qWarning("Unable to obtain device handle.");
 
@@ -41,9 +54,6 @@ Handle::Handle(const Device &device, QObject *parent) :
 
 Handle::~Handle()
 {
-    foreach (int num, d_ptr->claimedInterfaces)
-        libusb_release_interface(d_ptr->rawhandle, num);
-    libusb_close(d_ptr->rawhandle);
     delete d_ptr;
 }
 
@@ -59,11 +69,12 @@ int Handle::claimInterface(int num)
 
 int Handle::releaseInterface(int num)
 {
-    int r = libusb_release_interface(d_ptr->rawhandle, num);
+    Q_D(Handle);
+    int r = libusb_release_interface(d->rawhandle, num);
     if (r)
         qWarning("Failed to release interface %d", num);
     else
-        d_ptr->claimedInterfaces.removeOne(num);
+        d->claimedInterfaces.removeOne(num);
     return r;
 }
 
