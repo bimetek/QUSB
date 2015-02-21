@@ -58,6 +58,58 @@ Handle::~Handle()
     delete d_ptr;
 }
 
+int Handle::activeConfiguration() const
+{
+    int rc = 0;
+    int config = 0;
+    //This method returns a returncode and puts the data you actually
+    //want in an int you pass by reference.
+    rc = libusb_get_configuration(d_ptr->rawhandle,&config);
+    switch(rc)
+    {
+    case 0:
+        if(config != 0)
+            return config;
+        else
+        {
+            qWarning("The device is in an unconfigured state");
+            return 0;
+        }
+    case LIBUSB_ERROR_NO_DEVICE:
+        qWarning("The device has been disconnected");
+        break;
+    default:
+        qWarning("An error has occured");
+        break;
+    }
+    return rc;
+}
+
+int Handle::setConfiguration(int config) const
+{
+    int rc = 0;
+    rc = libusb_set_configuration(d_ptr->rawhandle, config);
+    switch(rc)
+    {
+    case 0://success
+        return 0;
+    case LIBUSB_ERROR_NO_DEVICE:
+        qWarning("The device has been disconnected");
+        break;
+    case LIBUSB_ERROR_BUSY:
+        qWarning("The interface is already claimed");
+        break;
+    case LIBUSB_ERROR_NOT_FOUND:
+        qWarning("The requested configuration does not exist");
+        break;
+    default:
+        qWarning("An error has occured");
+        break;
+    }
+    return rc;
+}
+
+
 int Handle::claimInterface(int num)
 {
     int r = libusb_claim_interface(d_ptr->rawhandle, num);
@@ -77,6 +129,25 @@ int Handle::releaseInterface(int num)
     else
         d->claimedInterfaces.removeOne(num);
     return r;
+}
+
+int Handle::setInterfaceAlternateSetting(int interfaceNumber, int alternateSetting) const
+{
+    int rc = libusb_set_interface_alt_setting(d_ptr->rawhandle, interfaceNumber, alternateSetting);
+    switch(rc)
+    {
+    case 0://success
+        return 0;
+    case LIBUSB_ERROR_NOT_FOUND:
+        qWarning("The interface is not claimed or the requested alternate setting does not exist");
+        break;
+    case LIBUSB_ERROR_NO_DEVICE:
+        qWarning("The device has been disconnected");
+        break;
+    default:
+        qWarning("An error has occured");
+    }
+    return rc;
 }
 
 Handle *Handle::fromVendorIdProductId(quint16 vid, quint16 pid)

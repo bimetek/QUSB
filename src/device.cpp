@@ -121,6 +121,17 @@ Device::Speed Device::speed() const
     return sp;
 }
 
+int Device::maximumPacketSize(uchar endpoint) const
+{
+    return libusb_get_max_packet_size(d_ptr->rawdevice, endpoint);
+}
+
+int Device::maximumIsoPacketSize(uchar endpoint) const
+{
+    return libusb_get_max_iso_packet_size(d_ptr->rawdevice, endpoint);
+}
+
+
 qint32 Device::vendorId() const
 {
     libusb_device_descriptor desc;
@@ -145,7 +156,7 @@ qint16 Device::product() const
     int r = libusb_get_device_descriptor(d_ptr->rawdevice, &desc);
     if (r)
         return -1;
-    return desc.iProduct;
+    return desc.iProduct;    
 }
 
 qint16 Device::manufacturer() const
@@ -164,6 +175,24 @@ qint16 Device::serialNumber() const
     if (r)
         return -1;
     return desc.iSerialNumber;
+}
+
+qint16 Device::deviceClass() const
+{
+    libusb_device_descriptor desc;
+    int r = libusb_get_device_descriptor(d_ptr->rawdevice, &desc);
+    if (r)
+        return -1;
+    return desc.bDeviceClass;
+}
+
+qint16 Device::deviceSubClass() const
+{
+    libusb_device_descriptor desc;
+    int r = libusb_get_device_descriptor(d_ptr->rawdevice, &desc);
+    if (r)
+        return -1;
+    return desc.bDeviceSubClass;
 }
 
 Device &Device::operator=(const Device &d)
