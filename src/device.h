@@ -47,11 +47,11 @@ public:
     quint8 bus() const;
     quint8 address() const;
     Speed speed() const;
-    qint32 vendorId() const;        // A qint16, or -1
-    qint32 productId() const;       // A qint16, or -1
-    qint32 product() const;         // A qint16, or -1
-    qint32 manufacturer() const;    // A qint16, or -1
-    qint32 serialNumber() const;    // A qint16, or -1
+    qint32 vendorId() const;        // A quint16, or -1
+    qint32 productId() const;       // A quint16, or -1
+    qint16 product() const;         // A quint8, or -1
+    qint16 manufacturer() const;    // A quint8, or -1
+    qint16 serialNumber() const;    // A quint8, or -1
 
     Device &operator=(const Device &d);
 

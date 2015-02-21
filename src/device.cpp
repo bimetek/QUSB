@@ -139,7 +139,7 @@ qint32 Device::productId() const
     return desc.idProduct;
 }
 
-qint32 Device::product() const
+qint16 Device::product() const
 {
     libusb_device_descriptor desc;
     int r = libusb_get_device_descriptor(d_ptr->rawdevice, &desc);
@@ -148,7 +148,7 @@ qint32 Device::product() const
     return desc.iProduct;
 }
 
-qint32 Device::manufacturer() const
+qint16 Device::manufacturer() const
 {
     libusb_device_descriptor desc;
     int r = libusb_get_device_descriptor(d_ptr->rawdevice, &desc);
@@ -157,7 +157,7 @@ qint32 Device::manufacturer() const
     return desc.iManufacturer;
 }
 
-qint32 Device::serialNumber() const
+qint16 Device::serialNumber() const
 {
     libusb_device_descriptor desc;
     int r = libusb_get_device_descriptor(d_ptr->rawdevice, &desc);
