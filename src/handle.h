@@ -26,8 +26,11 @@ public:
     explicit Handle(const Device &device, QObject *parent = 0);
     ~Handle();
 
+    int activeConfiguration() const;
+    int setConfiguration(int config) const;
     int claimInterface(int num);
     int releaseInterface(int num);
+    int setInterfaceAlternateSetting(int,int) const;
 
     libusb_device_handle *rawhandle() const;
 
