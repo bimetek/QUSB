@@ -12,7 +12,7 @@ This is very much a work in progress. No support whatsoever. Use at your own ris
 
 ## License
 
-QUSB is released under GNU Lesser General Public License, version 3. A copy of the LGPLv3 license should have been included in the project source code distribution.
+QUSB is released under GNU Lesser General Public License, version 3 or later. A copy of the license should have been included in the project source code distribution.
 
 Please also note that since QUSB depends on LibUSB, you will likely need to consider the availibility of LibUSB when you re-distribute the binary and/or source of it when you use QUSB. LibUSB is licensed under the ​GNU Lesser General Public License version 2.1 or later. See the [project home of LibUSB](http://www.libusb.org) for more detailed information.
 
