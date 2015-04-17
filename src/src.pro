@@ -85,7 +85,7 @@ isEmpty(QUSB_INSTALL_PREFIX) {  # If the user had set this, honor that
         QUSB_INSTALL_PREFIX = /usr/local/qusb
     }
     win32 {
-        QWT_INSTALL_PREFIX = C:/qusb
+        QUSB_INSTALL_PREFIX = C:/qusb
     }
 }
 
